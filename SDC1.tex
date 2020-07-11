@@ -471,8 +471,71 @@
 			\begin{center}
 				\includegraphics[width=0.99 \textwidth]{./images/Single tone.png}
 			\end{center}
-			The above diagram represents the actual time varying signal together with it frequency spectrum on the right.
-			
+			The above diagram represents the actual time varying signal together with it frequency spectrum on the right.\\\smallskip
+			\subsubsection{Power of Single Tone Modulated Signal}
+			\begin{flushleft}
+				The power of single tone modulated signal is given by,
+				\begin{center}
+					$P_{total}=P_{carrier}+P_{USB}+P_{LSB}$\\\bigskip
+					where LSB stands for Lower Side Band and USB for Upper Side Band, in general Power $P$ is given by,\\\bigskip
+					$P=\dfrac{V_{rms}^{2}}{R}$
+					where, $R$ is the resistance of the antenna,\\\bigskip
+					If $R=1$ then we have,\\\bigskip
+					Carrier power $P_{carrier}=\dfrac{1}{2} A_c^2$\\\bigskip
+					Carrier power $P_{LSB}=\dfrac{1}{8} \mu^2 A_c^2$\\\bigskip
+					Carrier power $P_{USB}=\dfrac{1}{8} \mu^2 A_c^2$\\\bigskip
+					Total Power $P_{total}=P_{carrier}[1+\dfrac{\mu^2}{2}]$
+				\end{center}
+			In particular the ratio of total power in the sideband to the total power in the modulated wave is equal to,\\\bigskip
+			\begin{equation}
+				\dfrac{\mu^2}{2+\mu^2}
+			\end{equation}
+			From the above factor we can see that the ratio,
+			\begin{itemize}
+				\item{Depends only on the modulation factor $\mu$}
+				\item{If $\mu = 1$, the total power in the two side frequencies of the resulting AM wave is only one-third of the total power in the modulated wave.}
+				\item{If the percentage modulation is less than 20\%, the power in one side frequency is less than 1\% of the total power of the Amplitude modulated wave. }
+			\end{itemize}
+			\end{flushleft}
+			\subsubsection{Power of Multi Tone modulated signal}
+			\begin{flushleft}
+				Generalzing the the \textit{equation} (12) for multi-tone signal we have,
+				\begin{equation}
+				\dfrac{\mu_{mt}^2}{2+\mu_{mt}^2}
+				\end{equation}
+				Where, $\mu_{mt}^{2}=\sum\limits_{i=1}^n \mu_{i}^{2}$, here $\mu_i$'s are the modulation factor of the individual message signal.
+				
+			\end{flushleft}
+		\end{flushleft}
+	
+		\subsection{Generation of Amplitude Modulated Wave}
+		\begin{flushleft}
+			The block diagram of the square law modulator is shown as follows,\\
+			\begin{center}
+				\includegraphics[width=0.99 \textwidth]{./images/Square Law modulator.png}
+			\end{center}
+			If our modulating signal is $m(t)$ and carrier signal is $c(t)=A_c cos(2 \pi f_c t)$.\\
+			\begin{center}
+				$V_1 (t) = m(t) + A_c cos(2 \pi f_c t) $
+			\end{center}
+			If the signal $V_1 (t)$ is applied as an input to a nonlinear device like diode. The characteristics of the diode are closely related to square law, the equation of which can be represented as,
+			\begin{equation}
+				V_2 (t) = k_1 V_1 (t) + k_2 V_1 ^ {2} (t)
+			\end{equation}
+			where, $k_1$ and $k_2$ are constants.\\
+			Substituting $V_1 (t) $ in \textit{equation} (14) we have,
+			\begin{equation}
+				V_2 (t) = k_1 [m(t) + A_c cos(2 \pi f_c t)] + k_2 [m(t) + A_c cos(2 \pi f_c t)] ^ {2} (t)
+			\end{equation}
+			Simplifying $V_2 (t)$ we have,
+			\begin{equation}
+				V_2 (t) = k_1 m(t) + k_2 m^2 (t) + k_2 A_c ^ 2 cos^2 (2 \pi f_c t) + k_1 A_c [1+(\dfrac{2 k_2}{k_1})] cos(2 \pi f_c t)
+			\end{equation}
+			The first \textit{three} terms in the above equation are unwanted and only the last term was wanted signal, so we can remove the first three terms by passing the above signal \textit{i.e.,} $V_2 (t)$ through a band pass filter. Therefore, the final output of the square law modulator is,
+			\begin{equation}
+				y(t) = k_1 A_c [1+(\dfrac{2 k_2}{k_1})] cos(2 \pi f_c t)
+			\end{equation}
+			comparing the above equation with the standard equation of the amplitude modulated wave in \textit{equation} (1) we see that it is indeed the required amplitude modulated wave.
 		\end{flushleft}
 		
 		\subsection{Types of Amplitude Modulation}
@@ -485,9 +548,19 @@
 			\end{itemize}
 		\end{flushleft}
 		\subsection{Advantages}
-		\begin{flushleft}
-			conten
-		\end{flushleft}
+		\begin{itemize}
+			\item{It is simple to implement}
+			\item{It can be demodulated using a circuit consisting of very few
+				components}
+			\item{AM receivers are inexpensive because no specialized components
+				are required}
+		\end{itemize}
+		\subsection{Disadvantages}
+		\begin{itemize}
+			\item{It is not efficient with respect to power usage}
+			\item{It is not efficient in bandwidth; requires a bandwidth equal to twice the highest audio frequency}
+			\item{It is prone to high levels of noise because most noise is amplitude based and AM detectors are sensitive to it.}
+		\end{itemize}
 	\end{flushleft}
 	\pagebreak
 	\section{Frequency Modulation}
