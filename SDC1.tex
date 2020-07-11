@@ -48,7 +48,7 @@
 	
 	
 	\begin{titlepage}
-	\title{\includegraphics[width=0.38 \textwidth]{./NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Mathematics}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}}
+	\title{\includegraphics[width=0.38 \textwidth]{./NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Computer Science and Engineering}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}}
 	%\author{Subject : SDC \\\\ Submitted by,\\Name : \\Scholar ID : }
 	\date{\today}
 	\clearpage\maketitle
@@ -462,8 +462,17 @@
 			We have another useful relation for finding the modulation factor $\mu$.\\\smallskip
 			Using the following formula, and using it in \textit{equation} (9) we have,
 			\begin{center}
-				$y(t)=A_c cos(2 \pi f_c t) + \dfrac{1}{2}cos[2 \pi (f_c +f_m)t]$
+				$y(t)=A_c cos(2 \pi f_c t) + \dfrac{1}{2} \mu A_c cos[2 \pi (f_c +f_m)t]+ \dfrac{1}{2} \mu A_c cos[2 \pi (f_c -f_m)t]$
 			\end{center}
+			Taking the Fourier Transform of the above equation we have,
+			\begin{equation}
+				Y(f)=\dfrac{1}{2} A_c [\delta (f - f_c) + \delta(f+f_c)] + \dfrac{1}{4} \mu A_c cos[\delta (f - (f_c+f_m)) + \delta (f + (f_c+f_m))]+ \dfrac{1}{4} \mu A_c cos[\delta (f - (f_c-f_m)) + \delta (f + (f_c-f_m))]
+			\end{equation}
+			\begin{center}
+				\includegraphics[width=0.99 \textwidth]{./images/Single tone.png}
+			\end{center}
+			The above diagram represents the actual time varying signal together with it frequency spectrum on the right.
+			
 		\end{flushleft}
 		
 		\subsection{Types of Amplitude Modulation}
