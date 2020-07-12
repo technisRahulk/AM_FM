@@ -10,6 +10,7 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usepackage{siunitx}
 \usepackage{algorithm}
 \usepackage{textcomp}
 \usepackage[noend]{algorithmic}
@@ -48,7 +49,7 @@
 	
 	
 	\begin{titlepage}
-	\title{\includegraphics[width=0.38 \textwidth]{./NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Computer Science and Engineering}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}}
+	\title{\includegraphics[width=0.38 \textwidth]{./images/NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Computer Science and Engineering}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}}
 	%\author{Subject : SDC \\\\ Submitted by,\\Name : \\Scholar ID : }
 	\date{\today}
 	\clearpage\maketitle
@@ -695,8 +696,10 @@
 	\begin{flushleft}
 		
 		\subsection{Definition} 
-		\paragraph{}
+		\begin{flushleft}
 		When a digital or analog signal travels through a medium it loses some of its energy so that it can overcome the resistance of the medium. This loss of energy is called attenuation.That is why a wire carrying electrical signals gets warm. Some of the electrical energy of the signal is converted into heat. To compensate for this loss, amplifiers are used to amplify the signal.Signal amplification electrically increasing the strength of a line signal by one of several technical methods. Typically, on computer networks, amplification includes logic for noise reduction to prevent the underlying message data from becoming corrupted in the process.
+		
+		\end{flushleft}
 		
 		\begin{center}
 			\includegraphics[width=0.80 \textwidth]{./images/NKK1.png}
@@ -706,37 +709,37 @@
 		\end{center}
 		
 		\subsection{How to measure attenuation} 
-		\paragraph{}
+		\begin{flushleft}
 		The extent of attenuation is expressed in decibels (dBs).If $P_s$ is the signal power at the transmitting end (source) of a communications circuit and $P_d$ is the signal power at the receiving end (destination), then $P_s\, >\, P_d$. The power attenuation $A_p$ in decibels is given by the formula:
 		$$A_p= 10\log_{10}{\frac{P_s}{P_d}}$$
 		Attenuation can also be expressed in terms of voltage. If $A_v$ is the voltage attenuation in decibels, $V_s$ is the source signal voltage, and $V_d$ is the destination signal voltage, then:$$A_v= 20\log_{10}{\frac{V_s}{V_d}}$$\\\bigskip
 		\item Importance of Determination of Attenuation
 		\paragraph{}
 		Attenuation is important in telecommunications and ultrasound applications because it’s critical to determine signal strength as a function of distance. Minimizing the loss of attenuation is important in microwave, wireless and cellular applications because to function correctly an optical data link depends on modulated light reaching the receiver with enough power to be correctly demodulated. This power is reduced through attenuation, resulting in a loss of the light signal that’s being transmitted.
-		
+		\end{flushleft}
 		\subsection{ Causes of attenuation} 
-		\paragraph{}
+		\begin{flushleft}
 		Attenuation can relate to both hard-wired connections and to wireless transmissions. There are many instances of attenuation in telecommunications and digital network circuitry. Inherent attenuation can be caused by a number of signaling issues including:\\\bigskip
 		1. Transmission medium - All electrical signals transmitted down electrical conductors cause an electromagnetic field around the transmission. This field causes energy loss down the cable and gets worse depending upon the frequency and length of the cable run. \\\bigskip
 		2.  Crosstalk from adjacent cabling causes attenuation in copper or other conductive metal cabling.\\\bigskip
 		3. Conductors and connectors - Attenuation can occur as a signal passes across different conductive mediums and mated connector surfaces.\\\bigskip
-		
+		\end{flushleft}
 		\subsection{Types of attenuation} 
-		\paragraph{}
+		\begin{flushleft}
 		Different types of attenuation include:\\\bigskip
 		1. Deliberate attenuation can occur for example where a volume control is used to lower the sound level on consumer electronics.\\\bigskip
 		2. Automatic attenuation is a common feature of televisions and other audio equipment to prevent sound distortion by automatic level sensing that triggers attenuation circuits.\\\bigskip
 		3. Environmental attenuation relates to signal power loss due to the transmission medium, whether that be wireless, copper wired or fiber optic connected.
-		
+		\end{flushleft}
 		
 		
 		\subsection{Attenuation coefficients} 
-		\paragraph{}
+		\begin{flushleft}
 		Attenuation coefficient describes the extent to which the radiant flux of a beam is reduced as it passes through a specific material. It is used in the context of:\\\bigskip
 		1. X-rays or gamma rays, where it is denoted $\mu$ and measured in $cm^{-1}$\\
-		2. neutrons and nuclear reactors, where it is called macroscopic cross section, denoted $\sum$ and measured in $m^{−1}$ \\
+		2. neutrons and nuclear reactors, where it is called macroscopic cross section, denoted $\Sigma$ and measured in $m^{-1}$ \\
 		3. acoustics for characterizing particle size distribution, where it is denoted $\alpha$ and measured in $m^{-1}$\\\bigskip
-		
+		\end{flushleft}
 		There are  two types of attenuation coefficients:\\\bigskip
 		
 		1. \textbf{Linear attenuation coefficients}:
@@ -775,6 +778,116 @@
 	\end{flushleft}
 	\pagebreak
 	\section{Demodulation}
+	\begin{flushleft}
+		Demodulation is the process of extracting useful original information-bearing signal that had been modulated with a carrier wave. A demodulator is a device with the help of which we recover this signal. It could be an electronic circuit in case of software-defined radios it could be a computer program also, that is used to recover the information content from the modulated carrier wave.\\\smallskip
+		Since, there are many different types of modulation processes there are many types of demodulation processes as well. The signal output form a demodulator may represent the form of signal sent in the message signal, for example audio, video signals or some sort of binary data. There are mainly two different types of modulation and hence we will be discussing the demodulation in these two domains.
+		\subsection{Amplitude Demodulation}
+		\begin{flushleft}
+			For amplitude demodulation there are a lot of methods a few of them are:
+			\begin{itemize}
+				\item{Envelope Detector/Demodulator}
+				\item{Square Law Demodulator}
+				\item{Synchronous Detector}
+			\end{itemize}
+			\subsubsection{Envelope Detector/Demodulator}
+			\begin{flushleft}
+				The circuitry for demodulation of an Amplitude Modulated wave is given as follows:
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/Envelope Detector.png}
+				\end{center}
+				From the above we see how the diode in the circuit gets forward biased during the positive half of the signal and allows the capacitor to get fully charged. The discharge of capacitor during the downfall of the carrier signal help in restoration process of the original envelope of the signal. Therefore, this makes the time constant factor $\tau = R_l C$ to be just right so that the original signal is recovered. The ideal value of the factor $ \tau $ is given by the following equation,
+				\begin{equation}
+				\dfrac{1}{f_c} \ll R_l C \ll \dfrac{1}{f_m}
+				\end{equation}
+				The amplitude modulated wave is given by the following equation,
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/ammod.png}
+				\end{center}
+				Passing through the circuitry shown we have the following output,
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/amdemod.png}
+				\end{center}
+				If we take a look at the graph above we see that it is roughly a sinusoidal signal and will serve our purpose.\\
+				Next we will be looking at the \textit{square law demodulator}.
+				
+			\end{flushleft}
+			\subsubsection{Sqaure Law Demodulator}
+			\begin{flushleft}
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/Non Linear System.png}
+				\end{center}
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/Non Linear System.png}
+				\end{center}
+				The above figure represents a Non-Linear System that will be used to demodulate an Amplitude Modulated Signal. The block diagram of which is shown below.
+				\begin{center}
+					\includegraphics[width=0.60 \textwidth]{./images/Block Diagram of square law demodulator.png}
+				\end{center}
+				This demodulator contains a square law device as shown and low pass filter. The AM wave $V_1 (t)$ is applied as an input to this demodulator.\\
+				The standard form of AM wave is,\\
+				\begin{center}
+					$V_1 (t) = A_c [1+k_a m(t)]cos(2 \pi f_c t)$
+				\end{center} 
+				We know that the mathematical relationship between the input and the output(\textit{where the output of the device is} $V_2 (t)$) of square law device is \\
+				\begin{equation}
+				V_2 (t) = k_1 V_1 (t) + k_2 V_1 ^ {2} (t)
+				\end{equation}
+				\begin{equation}
+				\implies V_2 (t) = k_1 ( A_c [1+k_a m(t)]cos(2 \pi f_c t) ) + k_2 ( A_c [1+k_a m(t)]cos(2 \pi f_c t) (t) ) ^ {2} 
+				\end{equation}
+				Using the identity, $cos(2\theta)=2cos^{2}\theta -1$ and simplifying we have,
+				\begin{center}
+					$\implies V_2 (t) = k_1 A_c cos(2 \pi f_c t) ) + k_1 A_c k_a cos(2 \pi f_c t) ) + \dfrac{k_2 A_c ^2}{2}  
+					$\\$+ \dfrac{k_2 A_c ^2}{2} cos(4 \pi f_c t) + \dfrac{k_2 A_c ^2 k_a^2 m^2 (t)}{2} cos(4 \pi f_c t)$\\$ + k_2 A_c^2 k_a m(t) + k_2 A_c^2 k_a m(t) cos(4 \pi f_c t)$
+				\end{center}
+				In the above equation, the term $k_2 A_c^2 k_a m(t)$ is the scaled version of the message signal. It can be extracted by passing the above signal through a low pass filter and the DC components can be eliminated with the help of Low Pass Filter(LPF).
+				\subsection{Frequency Demodulation }
+				\begin{flushleft}
+					Here also in frequency modulation there are a lot of demodulation techniques to discuss a few we have,\\\smallskip
+					\begin{itemize}
+						\item{Frequency discrimination method.}
+						\item{Phase discrimination method.}
+					\end{itemize}
+					\subsubsection{Frequency Discrimination Method}
+					\begin{flushleft}
+						We know that the standard equation of FM is given by,\\
+						$s\left ( t \right ) =A_c \cos \left ( 2 \pi f_ct+2 \pi k_f \int m\left ( t \right )dt \right )$
+						where,$k_f$ is the change in frequency per unit voltage of the message.\\
+						$m(t)$ is the message signal\\
+						others are standard parameters already defined in the frequency modulation section.\\
+						Differentiating the above equation \textit{w.r.t} $t$ we have,
+						\begin{equation}
+						\frac{ds\left ( t \right )}{dt}= -A_c\left ( 2 \pi f_c+2 \pi k_fm\left ( t \right ) \right ) \sin\left ( 2 \pi f_ct+2 \pi k_f\int m\left ( t \right )dt \right )
+						\end{equation} 
+						Using the identity $-sin(\theta)=sin(\theta-\ang{180} )$
+						\begin{equation}
+						\implies \frac{ds(t)}{dt}=A_c\left ( 2 \pi f_c+2 \pi k_fm\left ( t \right ) \right )\sin\left ( 2 \pi f_ct+2 \pi k_f \int m\left ( t \right )dt-180^0  \right )
+						\end{equation}
+						\begin{equation}
+						\implies \frac{ds(t)}{dt}=A_c\left ( 2 \pi f_c \right )\left [ 1+\left ( \frac{k_f}{k_c} \right )m\left ( t \right ) \right ] \sin\left ( 2 \pi f_ct+2 \pi k_f\int m\left ( t \right )dt-180^0 \right )
+						\end{equation}
+						The amplitude term in the above equation, resembles to that of the envelope of the AM wave, and the angle term \textit{i.e.,} the sine quantity represents the angle term of the FM wave.\\\smallskip
+						Hence, our requirement is the modulating signal $m(t)$. Hence, we can recover it using envelope detector of the AM wave. The, block diagram of the Demodulator is shown as follows:
+						\begin{center}
+							\includegraphics[width=0.60 \textwidth]{./images/Frequency Discrimination method.png}
+						\end{center}
+						As we can see from the block diagram we see that it consists of the differentiator and the envelope detector. Differentiator is used to convert the Frequency Modulated wave into a combination of AM and FM wave. It converts the frequency variations of FM wave into the corresponding voltage (\textit{amplitude}) variations of AM wave. We know the operation of the envelope detector as it was previously discussed in the Amplitude Demodulation section. It produces the demodulated output of the AM wave, which is our required message signal.
+					\end{flushleft}
+					\subsubsection{Frequency Discrimination Method}
+					\begin{flushleft}
+						The following diagram illustrates the FM demodulator using phase discrimination method.
+						\begin{center}
+							\includegraphics[width=0.60 \textwidth]{./images/Phase discrimination method.png}
+						\end{center}
+						From the block diagram we see that, it consists of the multiplier, the low pass filter and the Voltage Controlled Oscillator(VCO). VCO produces an output signal $v(t)$, whose frequency is proportional to the signal voltage $d(t)$. \\\smallskip
+						Initially when the signal $d(t)$ is zero, adjust the VCO to produce an output signal $v(t)$, having a carrier frequency and -\ang{90} phase shift with respect to the carrier signal.\\\smallskip
+						FM wave $s(t)$ and the VCO output $v(t)$ are applied as inputs of the multiplier. The multiplier produces an output, having a high frequency component and a low frequency component. Low pass filer eliminates the high frequency components and produces only the low frequency component as its output.\\\smallskip
+						This low frequency component contains only the term-related phase difference. Hence we get our desired message signal.
+					\end{flushleft}
+				\end{flushleft}
+			\end{flushleft} 
+		\end{flushleft}
+	\end{flushleft}
 	\pagebreak
  	
 \end{document}
