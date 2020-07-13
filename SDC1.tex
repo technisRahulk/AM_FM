@@ -686,124 +686,126 @@
 	A simplified block diagram of this indirect FM system is shown in below fig. The message signal $m(t)$ is first integrated and then used to phase-modulate a crystal-controlled oscillator which provides frequency stability. In order to minimize the distortion inherent in the phase modulator, the maximum phase deviation or modulation index is purposely kept small, thereby resulting in a narrow-band FM wave. The narrow band FM wave is next multiplied in frequency by means of a frequency multiplier so as to produce the desired wide-band FM wave.
 	\end{flushleft}
 	\pagebreak
-	\section{Simulation}
-	\subsection{Code}
-	\begin{flushleft}
-		\lstset{numbers=left, 
-			numberstyle=\tiny, 
-			breaklines=true,
-			numbersep=5pt} 
-		\begin{lstlisting}[language=python,caption={Mod Demod Codes}]
-		import numpy as np
-		import scipy.fftpack as fourier
-		import matplotlib.pyplot as plt
-		class TimeFrequency():
-		def __init__(self, start, stop, step):
+	\section{Simulations}
+	\subsection{Code For Single-toned AM}
+	\begin{flushleft}The first code aptly describes Amplitude Modulation as well as demodulation for a single-toned message signal.We have also shown the plots of spectrum or Fourier Transform of modulated signal,demodulated signal,low-pass filter input.
+		\lstset{numbers=none,breaklines=true,} 
+		\begin{lstlisting}[language=python]
+import numpy as np
+import scipy.fftpack as fourier
+import matplotlib.pyplot as plt
+	
+class TimeFrequency():
+	def __init__(self, start, stop, step):
 		self.start = start
 		self.stop = stop
 		self.step = step
 		self.time = np.arange(self.start, self.stop, self.step)
 		self.freq = fourier.fftfreq(self.time.size, 0.1)
-		
-		def time_array(self):
+	
+	def time_array(self):
 		return self.time
-		
-		def frequencies(self):
+	
+	def frequencies(self):
 		return self.freq
-		
-		class Filter(object):
-		def __init__(self, cutoff):
+	
+class Filter(object):
+	def __init__(self, cutoff):
 		self.cutoff_frequency = cutoff
-		
-		def LPF(self):
+			
+	def LPF(self):
 		time = TimeFrequency(-1000, 1000, 0.1)
 		return np.sinc(6.28*self.cutoff_frequency*time.time_array())
+	
+class dsbsc(object):
+ def __init__(self,message_signal,carrier_frequency,time_scale_tuple):
+	 self.m = message_signal
+	 self.cf =carrier_frequency
+	 self.tf =TimeFrequency(time_scale_tuple[0],time_scale_tuple[1], time_scale_tuple[2])
+	 self.t  =self.tf.time_array()
+	 self.freq =self.tf.frequencies()
 		
-		class dsbsc(object):
-		def __init__(self, message_signal, carrier_frequency, time_scale_tuple):
-		self.m = message_signal
-		self.cf = carrier_frequency
-		self.tf = TimeFrequency(time_scale_tuple[0], time_scale_tuple[1],time_scale_tuple[2])
-		self.t = self.tf.time_array()
-		self.freq = self.tf.frequencies()
+ def generate_carrier(self):
+	return np.cos(6.28*self.cf*self.t)
 		
-		def generate_carrier(self):
-		return np.cos(6.28*self.cf*self.t)
+ def modulate(self):
+	return self.generate_carrier()*self.m
 		
-		def modulate(self):
-		return self.generate_carrier()*self.m
+ def receiver_multiplier(self):
+	return self.modulate()*(2*self.generate_carrier())
 		
-		def receiver_multiplier(self):
-		return self.modulate()*(2*self.generate_carrier())
+ def demodulate(self, lpf_cutoff=0.1):
 		
-		def demodulate(self, lpf_cutoff=0.1):
+	# initiate a lowpass filter
+	filter_object = Filter(lpf_cutoff)
+	LPF_filter = filter_object.LPF()
+	
+	# generate the fourier transform of the lowpass filter
+	lpf_ft = fourier.fft(LPF_filter)
+	
+	# generate the fourier transform of the receiver multiplier
+	receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
+	
+	# multiply the fourier transforms to generate the output's fourier
+	# transform in time domain, it the signals should be convolved.
+	output_transform = lpf_ft*receiver_multiplier_fft
+	
+	# take the inverse fourier transform to generate the 
+	#output in time domain.
+	demodulated_signal = fourier.ifft(output_transform)
+	
+	return demodulated_signal
 		
-		# initiate a lowpass filter
-		filter_object = Filter(lpf_cutoff)
-		LPF_filter = filter_object.LPF()
-		
-		# generate the fourier transform of the lowpass filter
-		lpf_ft = fourier.fft(LPF_filter)
-		
-		# generate the fourier transform of the receiver multiplier
-		receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
-		
-		# multiply the fourier transforms to generate the output's fourier transform
-		# in time domain, it the signals should be convolved.
-		output_transform = lpf_ft*receiver_multiplier_fft
-		
-		# take the inverse fourier transform to generate the output in time domain.
-		demodulated_signal = fourier.ifft(output_transform)
-		
-		return demodulated_signal
-		
-		def spectral_magnitude_plot(self, title, *args):
-		for i in args:
+ def spectral_magnitude_plot(self, title, *args):
+	for i in args:
 		plt.plot(self.freq, np.abs(fourier.fft(i)))
-		plt.title(title)
-		plt.show()
+	plt.title(title)
+	plt.show()
 		
-		def time_plot(self, title, *args):
-		for i in args:
+ def time_plot(self, title, *args):
+	for i in args:
 		plt.plot(self.t, i)
-		plt.title(title)
-		plt.show()
+	plt.title(title)
+	plt.show()
 		
-		
-		def test_script():
-		time = (-1000, 1000, 0.1)
-		t = np.arange(-1000, 1000, 0.1)
-		m = np.sin(6.28*10*t)
-		
-		scheme = dsbsc(m, 1000, time)
-		multiplier = scheme.receiver_multiplier()
-		
-		# message signal time plot
-		scheme.time_plot("Message Signal in time domain", m)
-		# dsbsc modulated time plot
-		scheme.time_plot("Carrier Signal in time domain", scheme.generate_carrier())
-		# carrier signal time plot
-		scheme.time_plot("DSBSC Modulated Signal in time domain", scheme.modulate())
-		# dsbsc modulated frequncy plot
-		scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT", scheme.modulate())
-		
-		# dsbsc receiver multiplier time plot.
-		scheme.time_plot("Input to Lowpass Filter", multiplier)
-		# dsbsc receiver multiplier frequency output.
-		scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input", multiplier)
-		
-		# lpf filter in time domain
-		scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain", Filter(0.1).LPF())
-		# lpf filter frequency output
-		scheme.spectral_magnitude_plot("Sinc Filter FFT", Filter(0.1).LPF())
-		
-		# demodulated signal in time domain
-		scheme.time_plot("Message and Demodulated Signal", m, scheme.demodulate(0.1)/16.0)
-		# demodulated signal frequency ouptut
-		demodulated = scheme.demodulate(0.1)
-		scheme.spectral_magnitude_plot("Demodulated Signal FFT", demodulated)
+	
+def test_script():
+	time = (-1000, 1000, 0.1)
+	t = np.arange(-1000, 1000, 0.1)
+	m = np.sin(6.28*10*t)
+	
+	scheme = dsbsc(m, 1000, time)
+	multiplier = scheme.receiver_multiplier()
+	
+	# message signal time plot
+	scheme.time_plot("Message Signal in time domain", m)
+	# dsbsc modulated time plot
+	scheme.time_plot("Carrier Signal in time domain",scheme.generate_carrier())
+	# carrier signal time plot
+	scheme.time_plot("DSBSC Modulated Signal in time domain",scheme.modulate())
+	# dsbsc modulated frequncy plot
+	scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT",scheme.modulate())
+	
+	# dsbsc receiver multiplier time plot.
+	scheme.time_plot("Input to Lowpass Filter", multiplier)
+	# dsbsc receiver multiplier frequency output.
+	scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input",multiplier)
+	
+	# lpf filter in time domain
+	scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain",Filter(0.1).LPF())
+	# lpf filter frequency output
+	scheme.spectral_magnitude_plot("Sinc Filter FFT",Filter(0.1).LPF())
+	
+	# demodulated signal in time domain
+	scheme.time_plot("Message and Demodulated Signal",m,scheme.demodulate(0.1)/16.0)
+	# demodulated signal frequency ouptut
+	demodulated = scheme.demodulate(0.1)
+	scheme.spectral_magnitude_plot("Demodulated Signal FFT",demodulated)
 		\end{lstlisting}
-		\subsection{Outputs}
+		\subsection{Outputs For Single-toned AM}
+	    \begin{flushleft}
+	    		When we run text\_script() in our Jupyter Notebook kernel we get the following plots as our outputs :
+	    \end{flushleft}
 		\begin{center}
 			{\includegraphics[width=0.80 \textwidth]{./images/m_sig.PNG}}\\\bigskip
 			{\includegraphics[width=0.80 \textwidth]{./images/c_sig.PNG}}
@@ -817,6 +819,136 @@
 			{\includegraphics[width=0.80 \textwidth]{./images/demod_fft.PNG}}
 		\end{center}
 	\end{flushleft}
+    	\subsection{Code For Multi-toned AM}
+    \begin{flushleft}This code  describes Amplitude Modulation as well as demodulation for a multi-toned message signal.We have also shown the plots of spectrum or Fourier Transform of modulated signal,demodulated signal,low-pass filter input.
+    	\lstset{numbers=none,breaklines=true,} 
+    	\begin{lstlisting}[language=python]
+import numpy as np
+import scipy.fftpack as fourier
+import matplotlib.pyplot as plt
+
+class TimeFrequency():
+ def __init__(self, start, stop, step):
+	self.start = start
+	self.stop = stop
+	self.step = step
+	self.time = np.arange(self.start, self.stop, self.step)
+	self.freq = fourier.fftfreq(self.time.size, 0.1)
+
+ def time_array(self):
+	return self.time
+
+ def frequencies(self):
+	return self.freq
+
+class Filter(object):
+ def __init__(self, cutoff):
+	self.cutoff_frequency = cutoff
+
+ def LPF(self):
+	time = TimeFrequency(-1000, 1000, 0.1)
+	return np.sinc(6.28*self.cutoff_frequency*time.time_array())
+
+class dsbsc(object):
+ def __init__(self,message_signal,carrier_frequency,time_scale_tuple):
+	self.m = message_signal
+	self.cf =carrier_frequency
+	self.tf =TimeFrequency(time_scale_tuple[0],time_scale_tuple[1], time_scale_tuple[2])
+	self.t  =self.tf.time_array()
+	self.freq =self.tf.frequencies()
+
+ def generate_carrier(self):
+	return np.cos(6.28*self.cf*self.t)
+
+ def modulate(self):
+	return self.generate_carrier()*self.m
+
+ def receiver_multiplier(self):
+	return self.modulate()*(2*self.generate_carrier())
+
+ def demodulate(self, lpf_cutoff=0.1):
+
+	# initiate a lowpass filter
+	filter_object = Filter(lpf_cutoff)
+	LPF_filter = filter_object.LPF()
+	
+	# generate the fourier transform of the lowpass filter
+	lpf_ft = fourier.fft(LPF_filter)
+	
+	# generate the fourier transform of the receiver multiplier
+	receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
+	
+	# multiply the fourier transforms to generate the output's fourier
+	# transform in time domain, it the signals should be convolved.
+	output_transform = lpf_ft*receiver_multiplier_fft
+	
+	# take the inverse fourier transform to generate the 
+	#output in time domain.
+	demodulated_signal = fourier.ifft(output_transform)
+	
+	return demodulated_signal
+
+ def spectral_magnitude_plot(self, title, *args):
+	for i in args:
+		plt.plot(self.freq, np.abs(fourier.fft(i)))
+	plt.title(title)
+	plt.show()
+
+ def time_plot(self, title, *args):
+	for i in args:
+		plt.plot(self.t, i)
+	plt.title(title)
+	plt.show()
+
+
+def test_script():
+	time = (-1000, 1000, 0.1)
+	t = np.arange(-1000, 1000, 0.1)
+	m =  np.sin(6.28*20*t) + np.sin(6.28*10*t)
+
+	scheme = dsbsc(m, 1000, time)
+	multiplier = scheme.receiver_multiplier()
+	
+	# message signal time plot
+	scheme.time_plot("Message Signal in time domain", m)
+	# dsbsc modulated time plot
+	scheme.time_plot("Carrier Signal in time domain",scheme.generate_carrier())
+	# carrier signal time plot
+	scheme.time_plot("DSBSC Modulated Signal in time domain",scheme.modulate())
+	# dsbsc modulated frequncy plot
+	scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT",scheme.modulate())
+	
+	# dsbsc receiver multiplier time plot.
+	scheme.time_plot("Input to Lowpass Filter", multiplier)
+	# dsbsc receiver multiplier frequency output.
+	scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input",multiplier)
+	
+	# lpf filter in time domain
+	scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain",Filter(0.1).LPF())
+	# lpf filter frequency output
+	scheme.spectral_magnitude_plot("Sinc Filter FFT",Filter(0.1).LPF())
+	
+	# demodulated signal in time domain
+	scheme.time_plot("Message and Demodulated Signal",m,scheme.demodulate(0.1)/16.0)
+	# demodulated signal frequency ouptut
+	demodulated = scheme.demodulate(0.1)
+	scheme.spectral_magnitude_plot("Demodulated Signal FFT",demodulated)
+   \end{lstlisting}
+   \subsection{Outputs For Multi-toned AM}
+   When we run text\_script() in our Jupyter Notebook kernel we get the following plots as our outputs :
+   \begin{center}
+		{\includegraphics[width=0.80 \textwidth]{./images/m_sig1.PNG}}\\\bigskip
+		{\includegraphics[width=0.80 \textwidth]{./images/c_sig1.PNG}}
+		{\includegraphics[width=0.80 \textwidth]{./images/modu1.PNG}}\\\bigskip
+		{\includegraphics[width=0.80 \textwidth]{./images/modu_fft1.PNG}}
+		{\includegraphics[width=0.80 \textwidth]{./images/inp_lpf1.PNG}}\\\bigskip
+		{\includegraphics[width=0.80 \textwidth]{./images/inp_lpf_fft1.PNG}}
+		{\includegraphics[width=0.80 \textwidth]{./images/sinc1.PNG}}\\\bigskip
+		{\includegraphics[width=0.80 \textwidth]{./images/sinc_fft1.PNG}}
+		{\includegraphics[width=0.80 \textwidth]{./images/demod1.PNG}}\\\bigskip
+		{\includegraphics[width=0.80 \textwidth]{./images/demod_fft1.PNG}}
+   \end{center}
+   \end{flushleft}
 	\pagebreak
 	\section{Attenuation}
 	\begin{flushleft}
