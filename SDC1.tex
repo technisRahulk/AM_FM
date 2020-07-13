@@ -551,14 +551,16 @@
 		\begin{itemize}
 			\item{It is simple to implement}
 			\item{It can be demodulated using a circuit consisting of very few
-				components}
+				components
+}
 			\item{AM receivers are inexpensive because no specialized components
 				are required}
 		\end{itemize}
 		\subsection{Disadvantages}
 		\begin{itemize}
 			\item{It is not efficient with respect to power usage}
-			\item{It is not efficient in bandwidth; requires a bandwidth equal to twice the highest audio frequency}
+			\item{It is not efficient in bandwidth; requires a bandwidth equal to twice the highest audio frequency
+}
 			\item{It is prone to high levels of noise because most noise is amplitude based and AM detectors are sensitive to it.}
 		\end{itemize}
 	\end{flushleft}
@@ -690,6 +692,87 @@
 	\section{Code}
 	\pagebreak
 	\section{Attenuation}
+	\begin{flushleft}
+		
+		\subsection{Definition} 
+		\paragraph{}
+		When a digital or analog signal travels through a medium it loses some of its energy so that it can overcome the resistance of the medium. This loss of energy is called attenuation.That is why a wire carrying electrical signals gets warm. Some of the electrical energy of the signal is converted into heat. To compensate for this loss, amplifiers are used to amplify the signal.Signal amplification electrically increasing the strength of a line signal by one of several technical methods. Typically, on computer networks, amplification includes logic for noise reduction to prevent the underlying message data from becoming corrupted in the process.
+		
+		\begin{center}
+			\includegraphics[width=0.80 \textwidth]{./images/NKK1.png}
+		\end{center}
+		\begin{center}
+			Figure: Effect of Attenuation and Amplification
+		\end{center}
+		
+		\subsection{How to measure attenuation} 
+		\paragraph{}
+		The extent of attenuation is expressed in decibels (dBs).If $P_s$ is the signal power at the transmitting end (source) of a communications circuit and $P_d$ is the signal power at the receiving end (destination), then $P_s\, >\, P_d$. The power attenuation $A_p$ in decibels is given by the formula:
+		$$A_p= 10\log_{10}{\frac{P_s}{P_d}}$$
+		Attenuation can also be expressed in terms of voltage. If $A_v$ is the voltage attenuation in decibels, $V_s$ is the source signal voltage, and $V_d$ is the destination signal voltage, then:$$A_v= 20\log_{10}{\frac{V_s}{V_d}}$$\\\bigskip
+		\item Importance of Determination of Attenuation
+		\paragraph{}
+		Attenuation is important in telecommunications and ultrasound applications because it’s critical to determine signal strength as a function of distance. Minimizing the loss of attenuation is important in microwave, wireless and cellular applications because to function correctly an optical data link depends on modulated light reaching the receiver with enough power to be correctly demodulated. This power is reduced through attenuation, resulting in a loss of the light signal that’s being transmitted.
+		
+		\subsection{ Causes of attenuation} 
+		\paragraph{}
+		Attenuation can relate to both hard-wired connections and to wireless transmissions. There are many instances of attenuation in telecommunications and digital network circuitry. Inherent attenuation can be caused by a number of signaling issues including:\\\bigskip
+		1. Transmission medium - All electrical signals transmitted down electrical conductors cause an electromagnetic field around the transmission. This field causes energy loss down the cable and gets worse depending upon the frequency and length of the cable run. \\\bigskip
+		2.  Crosstalk from adjacent cabling causes attenuation in copper or other conductive metal cabling.\\\bigskip
+		3. Conductors and connectors - Attenuation can occur as a signal passes across different conductive mediums and mated connector surfaces.\\\bigskip
+		
+		\subsection{Types of attenuation} 
+		\paragraph{}
+		Different types of attenuation include:\\\bigskip
+		1. Deliberate attenuation can occur for example where a volume control is used to lower the sound level on consumer electronics.\\\bigskip
+		2. Automatic attenuation is a common feature of televisions and other audio equipment to prevent sound distortion by automatic level sensing that triggers attenuation circuits.\\\bigskip
+		3. Environmental attenuation relates to signal power loss due to the transmission medium, whether that be wireless, copper wired or fiber optic connected.
+		
+		
+		
+		\subsection{Attenuation coefficients} 
+		\paragraph{}
+		Attenuation coefficient describes the extent to which the radiant flux of a beam is reduced as it passes through a specific material. It is used in the context of:\\\bigskip
+		1. X-rays or gamma rays, where it is denoted $\mu$ and measured in $cm^{-1}$\\
+		2. neutrons and nuclear reactors, where it is called macroscopic cross section, denoted $\sum$ and measured in $m^{−1}$ \\
+		3. acoustics for characterizing particle size distribution, where it is denoted $\alpha$ and measured in $m^{-1}$\\\bigskip
+		
+		There are  two types of attenuation coefficients:\\\bigskip
+		
+		1. \textbf{Linear attenuation coefficients}:
+		\paragraph{}
+		It is the most important coefficient for diagnostic radiology. It is denoted by $\mu$. Linear attenuation coefficient is the quantitative measurement of attenuation per
+		centimeter of absorber. When the energy of the radiation is increased,the number of Xrays
+		that are attenuated decreases , and so does the linear attenuation
+		co efficient.\\\bigskip 
+		
+		2. \textbf{Mass attenuation coefficients:} 
+		\paragraph{}
+		This coefficient is used to quantitate the
+		attenuation of materials independent of their
+		physical state.For example, water, ice and water vapour have same mass coefficient. Mass attenuation coefficients is given by
+		$$Mass \,attenuation\, coefficient=\frac{linear\, attenuation}{density} $$ 
+		Its unit is $g/cm^2$.
+		\begin{center}
+			{\includegraphics[width=0.80 \textwidth]{./images/NKK2.png}}
+		\end{center}
+		\begin{center}
+			Figure: Mass attenuation coefficient for Lead and Tin
+		\end{center}
+		\subsection{Factors affecting attenuation}  
+		The following factors affect attenuation process:\\\bigskip
+		
+		1. \textbf{Energy of radiation:}\\\bigskip
+		As the energy of radiation increases, the number of transmitted photons increases and hence attenuation decreases.\\\bigskip
+		2. \textbf{Density of the matter:}\\\bigskip
+		Tissue density is one of the most important factors in Xray
+		attenuation. Attenuation increases linearly with density of the matter. If the density of a material is doubled, attenuation also doubles.\\\bigskip
+		3. \textbf{Effects of electrons per gram:}\\\bigskip
+		If the electrons per gram of absorber increases, the number of transmitted photons decreases and hence attenuation increases.\\\bigskip
+		4. \textbf{Atomic number:}\\\bigskip
+		The atomic number of the absorber has the same effect on attenuation as that of density,i.e., the attenuation increases as the atomic number increases.
+		
+	\end{flushleft}
 	\pagebreak
 	\section{Demodulation}
 	\pagebreak
