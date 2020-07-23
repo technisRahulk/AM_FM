@@ -15,6 +15,7 @@
 \usepackage{textcomp}
 \usepackage[noend]{algorithmic}
 \usepackage{listings}
+\usepackage{booktabs}
 	\lstset{
 		frame=tb, % draw a frame at the top and bottom of the code block
 		tabsize=4, % tab space width
@@ -49,8 +50,9 @@
 	
 	
 	\begin{titlepage}
-	\title{\includegraphics[width=0.38 \textwidth]{./images/NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Computer Science and Engineering}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}}
-	%\author{Subject : SDC \\\\ Submitted by,\\Name : \\Scholar ID : }
+	\title{\includegraphics[width=0.38 \textwidth]{./images/NIT_Silchar_logo.png}\\\textbf{\large NATIONAL INSTITUTE OF TECHNOLOGY, SILCHAR}\\\textbf{{\large Department of Computer Science and Engineering}}\\\bigskip {\large Project Report on,}\\\bigskip\textbf{{\normalsize "DATA TRANSMISSION ANALYSIS AND SIMULATION APPLYING AMPLITUDE/FREQUENCY MODULATION AND EFFECTS OF ATTENUATION ON THE TRANSMITTED SIGNAL." }}\\\bigskip \small{Under the supervision of}\\ \large\textbf{Dr. Anish Kumar Saha}}
+	\author{Subject : \textbf{Signals and Data Communication} \\
+		 Submitted by,\\ \textbf{Group Number : 16}\\ \textbf{Rahul kr. Gupta} (Sc. ID :1815125)\\ \textbf{Arvinder Singh}  (Sc. ID :1815126)\\ \textbf{Nilam kr. Kalita} (Sc. ID :1815127)\\ \textbf{Pritam Das} (Sc. ID :1815128)\\ }
 	\date{\today}
 	\clearpage\maketitle
 	\thispagestyle{empty}
@@ -62,17 +64,18 @@
     \begin{flushleft}
     	\fontsize{12pt}{18pt}\selectfont
     	 In this project we account for and study the area of data communication, the technical aspects, theory governing the transmission of signal, simulation of different modulations, transference of the signal across the transmitting channel, effects of attenuation on the transmitting signal and finally aspects of demodulation.\\\bigskip
-    	 Rigorous mathematical analysis of the different signals are done using powerful mathematical tools such as Laplace and Fourier transforms for ease of analysis of
+    	 Rigorous mathematical analysis of the different signals are done using powerful mathematical tools such as Fourier transforms for ease of analysis of
     	 different signals as well as in application. Simulations of transmission of different kinds of signals in MATLAB are shown in this project with exquisite detail.\\\bigskip
     	 We have covered different types of modulation in theory additionally, Amplitude and Frequency in particular for this project. The process of modulation with carrier signal
     	 and input/message signal is examined thoroughly.\\\bigskip
-    	 We try to cater to the power of computer software such as MATLAB, open source software such as \LaTeX to develop this project.
+    	 We try to cater to the power of computer software such as MATLAB ,Octave and Anaconda using JUPYTER Notebook, open source software such as \LaTeX  to develop this project.The project also reflects some of the codes in Python language.
 	\end{flushleft}
 	
 	\pagebreak
 	\tableofcontents
+	\pagebreak
 	\cleardoublepage
-	\section{Introduction}\label{sec:intro}
+	\section{Introduction}
 	\begin{flushleft}
 		Communication has been an integral part of the human civilization throughout the course of history.It is a way to transfer information from one place to anotherThe modern communication is very much different from 
 		the communication in the ancient times.
@@ -157,7 +160,7 @@
 		\begin{flushleft}
 			There are two kinds of modes of communication :
 			\begin{itemize}
-				\item \textbf{Broadcasting : } In the broadcasting mode of communication there is one sender from which message signals are transmitted to multiple receivers. This kind of communation is unideirectional. A common example of
+				\item \textbf{Broadcasting : } In the broadcasting mode of communication there is one sender from which message signals are transmitted to multiple receivers. This kind of communation is unidirectional. A common example of
 				bradcasting mode of communication is television network, radio network etc.
 				\item \textbf{Point-to-Point Communication : } In the point-to-point mode of communication, the message signal transimited by the sender is received by one receiver. This kind of communications are often bidirectional i.e. both the 
 				stations or devices can transmit and receive the message. A common example of point-to-point mode of communication is telephone network.\\\bigskip
@@ -684,279 +687,30 @@
 	
 	
 	A simplified block diagram of this indirect FM system is shown in below fig. The message signal $m(t)$ is first integrated and then used to phase-modulate a crystal-controlled oscillator which provides frequency stability. In order to minimize the distortion inherent in the phase modulator, the maximum phase deviation or modulation index is purposely kept small, thereby resulting in a narrow-band FM wave. The narrow band FM wave is next multiplied in frequency by means of a frequency multiplier so as to produce the desired wide-band FM wave.
+	\subsection{Advantages}
+	\begin{itemize}
+		\item{In FM radiated power is less.}
+		\item{Improved signal to noise ratio (about 25dB) w.r.t. to man made interference
+		}
+		\item{As only frequency changes are required to be carried, any amplifiers in the transmitter do not need to be linear.}
+	\end{itemize}
+	\subsection{Disadvantages}
+	\begin{itemize}
+		\item{More complicated receiver and transmitter. This is quite difficult to design the receiver which is very sensitive to a particular frequency.e}
+		\item{The sidebands for an FM transmission theoretically extend out to infinity. To limit the bandwidth of the transmission, filters are used, and these introduce some distortion of the signal.
+		}
+		\item{Much more Bandwidth (as much as 20 times as much as that of AM) is usually used.}
+	\end{itemize}
 	\end{flushleft}
-	\pagebreak
-	\section{Simulations}
-	\subsection{Code For Single-toned AM}
-	\begin{flushleft}The first code aptly describes Amplitude Modulation as well as demodulation for a single-toned message signal.We have also shown the plots of spectrum or Fourier Transform of modulated signal,demodulated signal,low-pass filter input.
-		\lstset{numbers=none,breaklines=true,} 
-		\begin{lstlisting}[language=python]
-import numpy as np
-import scipy.fftpack as fourier
-import matplotlib.pyplot as plt
-	
-class TimeFrequency():
-	def __init__(self, start, stop, step):
-		self.start = start
-		self.stop = stop
-		self.step = step
-		self.time = np.arange(self.start, self.stop, self.step)
-		self.freq = fourier.fftfreq(self.time.size, 0.1)
-	
-	def time_array(self):
-		return self.time
-	
-	def frequencies(self):
-		return self.freq
-	
-class Filter(object):
-	def __init__(self, cutoff):
-		self.cutoff_frequency = cutoff
-			
-	def LPF(self):
-		time = TimeFrequency(-1000, 1000, 0.1)
-		return np.sinc(6.28*self.cutoff_frequency*time.time_array())
-	
-class dsbsc(object):
- def __init__(self,message_signal,carrier_frequency,time_scale_tuple):
-	 self.m = message_signal
-	 self.cf =carrier_frequency
-	 self.tf =TimeFrequency(time_scale_tuple[0],time_scale_tuple[1], time_scale_tuple[2])
-	 self.t  =self.tf.time_array()
-	 self.freq =self.tf.frequencies()
-		
- def generate_carrier(self):
-	return np.cos(6.28*self.cf*self.t)
-		
- def modulate(self):
-	return self.generate_carrier()*self.m
-		
- def receiver_multiplier(self):
-	return self.modulate()*(2*self.generate_carrier())
-		
- def demodulate(self, lpf_cutoff=0.1):
-		
-	# initiate a lowpass filter
-	filter_object = Filter(lpf_cutoff)
-	LPF_filter = filter_object.LPF()
-	
-	# generate the fourier transform of the lowpass filter
-	lpf_ft = fourier.fft(LPF_filter)
-	
-	# generate the fourier transform of the receiver multiplier
-	receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
-	
-	# multiply the fourier transforms to generate the output's fourier
-	# transform in time domain, it the signals should be convolved.
-	output_transform = lpf_ft*receiver_multiplier_fft
-	
-	# take the inverse fourier transform to generate the 
-	#output in time domain.
-	demodulated_signal = fourier.ifft(output_transform)
-	
-	return demodulated_signal
-		
- def spectral_magnitude_plot(self, title, *args):
-	for i in args:
-		plt.plot(self.freq, np.abs(fourier.fft(i)))
-	plt.title(title)
-	plt.show()
-		
- def time_plot(self, title, *args):
-	for i in args:
-		plt.plot(self.t, i)
-	plt.title(title)
-	plt.show()
-		
-	
-def test_script():
-	time = (-1000, 1000, 0.1)
-	t = np.arange(-1000, 1000, 0.1)
-	m = np.sin(6.28*10*t)
-	
-	scheme = dsbsc(m, 1000, time)
-	multiplier = scheme.receiver_multiplier()
-	
-	# message signal time plot
-	scheme.time_plot("Message Signal in time domain", m)
-	# dsbsc modulated time plot
-	scheme.time_plot("Carrier Signal in time domain",scheme.generate_carrier())
-	# carrier signal time plot
-	scheme.time_plot("DSBSC Modulated Signal in time domain",scheme.modulate())
-	# dsbsc modulated frequncy plot
-	scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT",scheme.modulate())
-	
-	# dsbsc receiver multiplier time plot.
-	scheme.time_plot("Input to Lowpass Filter", multiplier)
-	# dsbsc receiver multiplier frequency output.
-	scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input",multiplier)
-	
-	# lpf filter in time domain
-	scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain",Filter(0.1).LPF())
-	# lpf filter frequency output
-	scheme.spectral_magnitude_plot("Sinc Filter FFT",Filter(0.1).LPF())
-	
-	# demodulated signal in time domain
-	scheme.time_plot("Message and Demodulated Signal",m,scheme.demodulate(0.1)/16.0)
-	# demodulated signal frequency ouptut
-	demodulated = scheme.demodulate(0.1)
-	scheme.spectral_magnitude_plot("Demodulated Signal FFT",demodulated)
-		\end{lstlisting}
-		\subsection{Outputs For Single-toned AM}
-	    \begin{flushleft}
-	    		When we run text\_script() in our Jupyter Notebook kernel we get the following plots as our outputs :
-	    \end{flushleft}
-		\begin{center}
-			{\includegraphics[width=0.80 \textwidth]{./images/m_sig.PNG}}\\\bigskip
-			{\includegraphics[width=0.80 \textwidth]{./images/c_sig.PNG}}
-			{\includegraphics[width=0.80 \textwidth]{./images/modu_sig.PNG}}\\\bigskip
-			{\includegraphics[width=0.80 \textwidth]{./images/modu_fft.PNG}}
-			{\includegraphics[width=0.80 \textwidth]{./images/lpf_inp.PNG}}\\\bigskip
-			{\includegraphics[width=0.80 \textwidth]{./images/lpf_inp_fft.PNG}}
-			{\includegraphics[width=0.80 \textwidth]{./images/sinc.PNG}}\\\bigskip
-			{\includegraphics[width=0.80 \textwidth]{./images/sinc_fft.PNG}}
-			{\includegraphics[width=0.80 \textwidth]{./images/demod.PNG}}\\\bigskip
-			{\includegraphics[width=0.80 \textwidth]{./images/demod_fft.PNG}}
-		\end{center}
-	\end{flushleft}
-    	\subsection{Code For Multi-toned AM}
-    \begin{flushleft}This code  describes Amplitude Modulation as well as demodulation for a multi-toned message signal.We have also shown the plots of spectrum or Fourier Transform of modulated signal,demodulated signal,low-pass filter input.
-    	\lstset{numbers=none,breaklines=true,} 
-    	\begin{lstlisting}[language=python]
-import numpy as np
-import scipy.fftpack as fourier
-import matplotlib.pyplot as plt
 
-class TimeFrequency():
- def __init__(self, start, stop, step):
-	self.start = start
-	self.stop = stop
-	self.step = step
-	self.time = np.arange(self.start, self.stop, self.step)
-	self.freq = fourier.fftfreq(self.time.size, 0.1)
-
- def time_array(self):
-	return self.time
-
- def frequencies(self):
-	return self.freq
-
-class Filter(object):
- def __init__(self, cutoff):
-	self.cutoff_frequency = cutoff
-
- def LPF(self):
-	time = TimeFrequency(-1000, 1000, 0.1)
-	return np.sinc(6.28*self.cutoff_frequency*time.time_array())
-
-class dsbsc(object):
- def __init__(self,message_signal,carrier_frequency,time_scale_tuple):
-	self.m = message_signal
-	self.cf =carrier_frequency
-	self.tf =TimeFrequency(time_scale_tuple[0],time_scale_tuple[1], time_scale_tuple[2])
-	self.t  =self.tf.time_array()
-	self.freq =self.tf.frequencies()
-
- def generate_carrier(self):
-	return np.cos(6.28*self.cf*self.t)
-
- def modulate(self):
-	return self.generate_carrier()*self.m
-
- def receiver_multiplier(self):
-	return self.modulate()*(2*self.generate_carrier())
-
- def demodulate(self, lpf_cutoff=0.1):
-
-	# initiate a lowpass filter
-	filter_object = Filter(lpf_cutoff)
-	LPF_filter = filter_object.LPF()
-	
-	# generate the fourier transform of the lowpass filter
-	lpf_ft = fourier.fft(LPF_filter)
-	
-	# generate the fourier transform of the receiver multiplier
-	receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
-	
-	# multiply the fourier transforms to generate the output's fourier
-	# transform in time domain, it the signals should be convolved.
-	output_transform = lpf_ft*receiver_multiplier_fft
-	
-	# take the inverse fourier transform to generate the 
-	#output in time domain.
-	demodulated_signal = fourier.ifft(output_transform)
-	
-	return demodulated_signal
-
- def spectral_magnitude_plot(self, title, *args):
-	for i in args:
-		plt.plot(self.freq, np.abs(fourier.fft(i)))
-	plt.title(title)
-	plt.show()
-
- def time_plot(self, title, *args):
-	for i in args:
-		plt.plot(self.t, i)
-	plt.title(title)
-	plt.show()
-
-
-def test_script():
-	time = (-1000, 1000, 0.1)
-	t = np.arange(-1000, 1000, 0.1)
-	m =  np.sin(6.28*20*t) + np.sin(6.28*10*t)
-
-	scheme = dsbsc(m, 1000, time)
-	multiplier = scheme.receiver_multiplier()
-	
-	# message signal time plot
-	scheme.time_plot("Message Signal in time domain", m)
-	# dsbsc modulated time plot
-	scheme.time_plot("Carrier Signal in time domain",scheme.generate_carrier())
-	# carrier signal time plot
-	scheme.time_plot("DSBSC Modulated Signal in time domain",scheme.modulate())
-	# dsbsc modulated frequncy plot
-	scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT",scheme.modulate())
-	
-	# dsbsc receiver multiplier time plot.
-	scheme.time_plot("Input to Lowpass Filter", multiplier)
-	# dsbsc receiver multiplier frequency output.
-	scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input",multiplier)
-	
-	# lpf filter in time domain
-	scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain",Filter(0.1).LPF())
-	# lpf filter frequency output
-	scheme.spectral_magnitude_plot("Sinc Filter FFT",Filter(0.1).LPF())
-	
-	# demodulated signal in time domain
-	scheme.time_plot("Message and Demodulated Signal",m,scheme.demodulate(0.1)/16.0)
-	# demodulated signal frequency ouptut
-	demodulated = scheme.demodulate(0.1)
-	scheme.spectral_magnitude_plot("Demodulated Signal FFT",demodulated)
-   \end{lstlisting}
-   \subsection{Outputs For Multi-toned AM}
-   When we run text\_script() in our Jupyter Notebook kernel we get the following plots as our outputs :
-   \begin{center}
-		{\includegraphics[width=0.80 \textwidth]{./images/m_sig1.PNG}}\\\bigskip
-		{\includegraphics[width=0.80 \textwidth]{./images/c_sig1.PNG}}
-		{\includegraphics[width=0.80 \textwidth]{./images/modu1.PNG}}\\\bigskip
-		{\includegraphics[width=0.80 \textwidth]{./images/modu_fft1.PNG}}
-		{\includegraphics[width=0.80 \textwidth]{./images/inp_lpf1.PNG}}\\\bigskip
-		{\includegraphics[width=0.80 \textwidth]{./images/inp_lpf_fft1.PNG}}
-		{\includegraphics[width=0.80 \textwidth]{./images/sinc1.PNG}}\\\bigskip
-		{\includegraphics[width=0.80 \textwidth]{./images/sinc_fft1.PNG}}
-		{\includegraphics[width=0.80 \textwidth]{./images/demod1.PNG}}\\\bigskip
-		{\includegraphics[width=0.80 \textwidth]{./images/demod_fft1.PNG}}
-   \end{center}
-   \end{flushleft}
 	\pagebreak
 	\section{Attenuation}
 	\begin{flushleft}
 		
 		\subsection{Definition} 
 		\begin{flushleft}
-		When a digital or analog signal travels through a medium it loses some of its energy so that it can overcome the resistance of the medium. This loss of energy is called attenuation.That is why a wire carrying electrical signals gets warm. Some of the electrical energy of the signal is converted into heat. To compensate for this loss, amplifiers are used to amplify the signal.Signal amplification electrically increasing the strength of a line signal by one of several technical methods. Typically, on computer networks, amplification includes logic for noise reduction to prevent the underlying message data from becoming corrupted in the process.
-		
+			When a digital or analog signal travels through a medium it loses some of its energy so that it can overcome the resistance of the medium. This loss of energy is called attenuation.That is why a wire carrying electrical signals gets warm. Some of the electrical energy of the signal is converted into heat. To compensate for this loss, amplifiers are used to amplify the signal.Signal amplification electrically increasing the strength of a line signal by one of several technical methods. Typically, on computer networks, amplification includes logic for noise reduction to prevent the underlying message data from becoming corrupted in the process.
+			
 		\end{flushleft}
 		
 		\begin{center}
@@ -968,35 +722,35 @@ def test_script():
 		
 		\subsection{How to measure attenuation} 
 		\begin{flushleft}
-		The extent of attenuation is expressed in decibels (dBs).If $P_s$ is the signal power at the transmitting end (source) of a communications circuit and $P_d$ is the signal power at the receiving end (destination), then $P_s\, >\, P_d$. The power attenuation $A_p$ in decibels is given by the formula:
-		$$A_p= 10\log_{10}{\frac{P_s}{P_d}}$$
-		Attenuation can also be expressed in terms of voltage. If $A_v$ is the voltage attenuation in decibels, $V_s$ is the source signal voltage, and $V_d$ is the destination signal voltage, then:$$A_v= 20\log_{10}{\frac{V_s}{V_d}}$$\\\bigskip
-		\item Importance of Determination of Attenuation
-		\paragraph{}
-		Attenuation is important in telecommunications and ultrasound applications because it’s critical to determine signal strength as a function of distance. Minimizing the loss of attenuation is important in microwave, wireless and cellular applications because to function correctly an optical data link depends on modulated light reaching the receiver with enough power to be correctly demodulated. This power is reduced through attenuation, resulting in a loss of the light signal that’s being transmitted.
+			The extent of attenuation is expressed in decibels (dBs).If $P_s$ is the signal power at the transmitting end (source) of a communications circuit and $P_d$ is the signal power at the receiving end (destination), then $P_s\, >\, P_d$. The power attenuation $A_p$ in decibels is given by the formula:
+			$$A_p= 10\log_{10}{\frac{P_s}{P_d}}$$
+			Attenuation can also be expressed in terms of voltage. If $A_v$ is the voltage attenuation in decibels, $V_s$ is the source signal voltage, and $V_d$ is the destination signal voltage, then:$$A_v= 20\log_{10}{\frac{V_s}{V_d}}$$\\\bigskip
+			\item Importance of Determination of Attenuation
+			\paragraph{}
+			Attenuation is important in telecommunications and ultrasound applications because it’s critical to determine signal strength as a function of distance. Minimizing the loss of attenuation is important in microwave, wireless and cellular applications because to function correctly an optical data link depends on modulated light reaching the receiver with enough power to be correctly demodulated. This power is reduced through attenuation, resulting in a loss of the light signal that’s being transmitted.
 		\end{flushleft}
 		\subsection{ Causes of attenuation} 
 		\begin{flushleft}
-		Attenuation can relate to both hard-wired connections and to wireless transmissions. There are many instances of attenuation in telecommunications and digital network circuitry. Inherent attenuation can be caused by a number of signaling issues including:\\\bigskip
-		1. Transmission medium - All electrical signals transmitted down electrical conductors cause an electromagnetic field around the transmission. This field causes energy loss down the cable and gets worse depending upon the frequency and length of the cable run. \\\bigskip
-		2.  Crosstalk from adjacent cabling causes attenuation in copper or other conductive metal cabling.\\\bigskip
-		3. Conductors and connectors - Attenuation can occur as a signal passes across different conductive mediums and mated connector surfaces.\\\bigskip
+			Attenuation can relate to both hard-wired connections and to wireless transmissions. There are many instances of attenuation in telecommunications and digital network circuitry. Inherent attenuation can be caused by a number of signaling issues including:\\\bigskip
+			1. Transmission medium - All electrical signals transmitted down electrical conductors cause an electromagnetic field around the transmission. This field causes energy loss down the cable and gets worse depending upon the frequency and length of the cable run. \\\bigskip
+			2.  Crosstalk from adjacent cabling causes attenuation in copper or other conductive metal cabling.\\\bigskip
+			3. Conductors and connectors - Attenuation can occur as a signal passes across different conductive mediums and mated connector surfaces.\\\bigskip
 		\end{flushleft}
 		\subsection{Types of attenuation} 
 		\begin{flushleft}
-		Different types of attenuation include:\\\bigskip
-		1. Deliberate attenuation can occur for example where a volume control is used to lower the sound level on consumer electronics.\\\bigskip
-		2. Automatic attenuation is a common feature of televisions and other audio equipment to prevent sound distortion by automatic level sensing that triggers attenuation circuits.\\\bigskip
-		3. Environmental attenuation relates to signal power loss due to the transmission medium, whether that be wireless, copper wired or fiber optic connected.
+			Different types of attenuation include:\\\bigskip
+			1. Deliberate attenuation can occur for example where a volume control is used to lower the sound level on consumer electronics.\\\bigskip
+			2. Automatic attenuation is a common feature of televisions and other audio equipment to prevent sound distortion by automatic level sensing that triggers attenuation circuits.\\\bigskip
+			3. Environmental attenuation relates to signal power loss due to the transmission medium, whether that be wireless, copper wired or fiber optic connected.
 		\end{flushleft}
 		
 		
 		\subsection{Attenuation coefficients} 
 		\begin{flushleft}
-		Attenuation coefficient describes the extent to which the radiant flux of a beam is reduced as it passes through a specific material. It is used in the context of:\\\bigskip
-		1. X-rays or gamma rays, where it is denoted $\mu$ and measured in $cm^{-1}$\\
-		2. neutrons and nuclear reactors, where it is called macroscopic cross section, denoted $\Sigma$ and measured in $m^{-1}$ \\
-		3. acoustics for characterizing particle size distribution, where it is denoted $\alpha$ and measured in $m^{-1}$\\\bigskip
+			Attenuation coefficient describes the extent to which the radiant flux of a beam is reduced as it passes through a specific material. It is used in the context of:\\\bigskip
+			1. X-rays or gamma rays, where it is denoted $\mu$ and measured in $cm^{-1}$\\
+			2. neutrons and nuclear reactors, where it is called macroscopic cross section, denoted $\Sigma$ and measured in $m^{-1}$ \\
+			3. acoustics for characterizing particle size distribution, where it is denoted $\alpha$ and measured in $m^{-1}$\\\bigskip
 		\end{flushleft}
 		There are  two types of attenuation coefficients:\\\bigskip
 		
@@ -1147,5 +901,437 @@ def test_script():
 		\end{flushleft}
 	\end{flushleft}
 	\pagebreak
- 	
+	\section{Simulations}
+	\subsection{To check the effect of modulation index on AM}
+	\begin{flushleft}Here,we are going to see the effect of modulation index on the modulated wave in case of Amplitude Modulation.
+		\lstset{numbers=none,breaklines=true,} 
+		\begin{lstlisting}[language=python]
+		import numpy as np
+		import scipy.fftpack as fourier
+		import matplotlib.pyplot as plt
+		
+		#Carrier wave c(t)=A_c*cos(2*pi*f_c*t)
+		#Modulating wave m(t)=A_m*cos(2*pi*f_m*t)
+		#Modulated wave s(t)=A_c[1+mu*cos(2*pi*f_m*t)]cos(2*pi*f_c*t)
+		
+		A_c =10
+		f_c = 200
+		A_m = 10
+		f_m = 10
+		modulation_index = float(input('Enter modulation index: '))
+		
+		t = np.linspace(0, 1, 1000)
+		carrier = A_c*np.cos(2*np.pi*f_c*t)
+		modulator = A_m*np.cos(2*np.pi*f_m*t)
+		product = A_c*(1+modulation_index*np.cos(2*np.pi*f_m*t))*np.cos(2*np.pi*f_c*t)
+		
+		plt.subplot(3,1,1)
+		plt.title('Amplitude Modulation')
+		plt.plot(modulator,'g')
+		plt.ylabel('Amplitude')
+		plt.xlabel('Message signal')
+		
+		plt.subplot(3,1,2)
+		plt.plot(carrier, 'r')
+		plt.ylabel('Amplitude')
+		plt.xlabel('Carrier signal')
+		
+		plt.subplot(3,1,3)
+		plt.plot(product, color="purple")
+		plt.ylabel('Amplitude')
+		plt.xlabel('AM signal')
+		
+		plt.subplots_adjust(hspace=1)
+		plt.rc('font', size=15)
+		fig = plt.gcf()
+		fig.set_size_inches(16, 9)
+		\end{lstlisting}
+		The carrier signal and message signal plots are given below :\\
+		\begin{center}
+			{\includegraphics[width=0.80 \textwidth]{./images/cm.PNG}}\\\bigskip
+		\end{center}
+		If we input the value of modulation index(M)= 1, the case is said to be perfect modulation and we get the following modulated wave :\\
+		\begin{center}
+			{\includegraphics[width=0.80 \textwidth]{./images/perfect.PNG}}\\\bigskip
+		\end{center}
+		If value of modulation index$(M)< 1$ say ,M=0.5 we get an undermodulated wave as attached below : \\
+		\begin{center}
+			{\includegraphics[width=0.80 \textwidth]{./images/undermodulated.PNG}}\\\bigskip
+		\end{center}
+		The only remaining case is when $M > 1$, we say the message has undergone \textbf{overmodulation } and we get the following plot :\\
+		\begin{center}
+			{\includegraphics[width=0.80 \textwidth]{./images/overmodulated.PNG}}\\\bigskip
+		\end{center}
+	\end{flushleft}
+    \pagebreak
+    \subsection{Code For Multi-toned AM}
+    \begin{flushleft}This code  describes Amplitude Modulation as well as demodulation for a multi-toned message signal.We have also shown the plots of spectrum or Fourier Transform of modulated signal,demodulated signal,low-pass filter input.
+    	\lstset{numbers=none,breaklines=true,} 
+    	\begin{lstlisting}[language=python]
+import numpy as np
+import scipy.fftpack as fourier
+import matplotlib.pyplot as plt
+
+class TimeFrequency():
+ def __init__(self, start, stop, step):
+	self.start = start
+	self.stop = stop
+	self.step = step
+	self.time = np.arange(self.start, self.stop, self.step)
+	self.freq = fourier.fftfreq(self.time.size, 0.1)
+
+ def time_array(self):
+	return self.time
+
+ def frequencies(self):
+	return self.freq
+
+class Filter(object):
+ def __init__(self, cutoff):
+	self.cutoff_frequency = cutoff
+
+ def LPF(self):
+	time = TimeFrequency(-1000, 1000, 0.1)
+	return np.sinc(6.28*self.cutoff_frequency*time.time_array())
+
+class dsbsc(object):
+ def __init__(self,message_signal,carrier_frequency,time_scale_tuple):
+	self.m = message_signal
+	self.cf =carrier_frequency
+	self.tf =TimeFrequency(time_scale_tuple[0],time_scale_tuple[1], time_scale_tuple[2])
+	self.t  =self.tf.time_array()
+	self.freq =self.tf.frequencies()
+
+ def generate_carrier(self):
+	return np.cos(6.28*self.cf*self.t)
+
+ def modulate(self):
+	return self.generate_carrier()*self.m
+
+ def receiver_multiplier(self):
+	return self.modulate()*(2*self.generate_carrier())
+
+ def demodulate(self, lpf_cutoff=0.1):
+
+	# initiate a lowpass filter
+	filter_object = Filter(lpf_cutoff)
+	LPF_filter = filter_object.LPF()
+	
+	# generate the fourier transform of the lowpass filter
+	lpf_ft = fourier.fft(LPF_filter)
+	
+	# generate the fourier transform of the receiver multiplier
+	receiver_multiplier_fft = fourier.fft(self.receiver_multiplier())
+	
+	# multiply the fourier transforms to generate the output's fourier
+	# transform in time domain, it the signals should be convolved.
+	output_transform = lpf_ft*receiver_multiplier_fft
+	
+	# take the inverse fourier transform to generate the 
+	#output in time domain.
+	demodulated_signal = fourier.ifft(output_transform)
+	
+	return demodulated_signal
+
+ def spectral_magnitude_plot(self, title, *args):
+	for i in args:
+		plt.plot(self.freq, np.abs(fourier.fft(i)))
+	plt.title(title)
+	plt.show()
+
+ def time_plot(self, title, *args):
+	for i in args:
+		plt.plot(self.t, i)
+	plt.title(title)
+	plt.show()
+
+
+def test_script():
+	time = (-1000, 1000, 0.1)
+	t = np.arange(-1000, 1000, 0.1)
+	m =  np.sin(6.28*20*t) + np.sin(6.28*10*t)
+
+	scheme = dsbsc(m, 1000, time)
+	multiplier = scheme.receiver_multiplier()
+	
+	# message signal time plot
+	scheme.time_plot("Message Signal in time domain", m)
+	# dsbsc modulated time plot
+	scheme.time_plot("Carrier Signal in time domain",scheme.generate_carrier())
+	# carrier signal time plot
+	scheme.time_plot("DSBSC Modulated Signal in time domain",scheme.modulate())
+	# dsbsc modulated frequncy plot
+	scheme.spectral_magnitude_plot("DSBSC Modulated Signal's FFT",scheme.modulate())
+	
+	# dsbsc receiver multiplier time plot.
+	scheme.time_plot("Input to Lowpass Filter", multiplier)
+	# dsbsc receiver multiplier frequency output.
+	scheme.spectral_magnitude_plot("FFT of Lowpass Filter's input",multiplier)
+	
+	# lpf filter in time domain
+	scheme.time_plot("Sinc Filter (Lowpass Filter) in time domain",Filter(0.1).LPF())
+	# lpf filter frequency output
+	scheme.spectral_magnitude_plot("Sinc Filter FFT",Filter(0.1).LPF())
+	
+	# demodulated signal in time domain
+	scheme.time_plot("Message and Demodulated Signal",m,scheme.demodulate(0.1)/16.0)
+	# demodulated signal frequency ouptut
+	demodulated = scheme.demodulate(0.1)
+	scheme.spectral_magnitude_plot("Demodulated Signal FFT",demodulated)
+   \end{lstlisting}
+   \pagebreak
+   \large\textbf{Outputs For Multi-toned AM : }
+   \small When we run text\_script() in our Jupyter Notebook kernel we get the following plots as our outputs :\\\bigskip
+   \begin{tabular}{ccccc}
+   	\toprule
+   	 a & b \\
+   	\midrule
+   	 {\includegraphics[width=6cm,height=6cm]{./images/m_sig1.PNG}} & {\includegraphics[width=6cm,height=6cm]{./images/c_sig1.PNG}}  \\
+   	 {\includegraphics[width=6cm,height=6cm]{./images/modu1.PNG}} & {\includegraphics[width=6cm,height=6cm]{./images/modu_fft1.PNG}}  \\
+     {\includegraphics[width=6cm,height=6cm]{./images/inp_lpf1.PNG}} & {\includegraphics[width=6cm,height=6cm]{./images/inp_lpf_fft1.PNG}} 
+   \end{tabular}
+   \pagebreak
+   \begin{tabular}{ccccc}
+   	\toprule
+   	a & b \\
+   	\midrule
+   	{\includegraphics[width=6cm,height=6cm]{./images/sinc1.PNG}} & {\includegraphics[width=6cm,height=6cm]{./images/sinc_fft1.PNG}} \\
+   	{\includegraphics[width=6cm,height=6cm]{./images/demod1.PNG}} & {\includegraphics[width=6cm,height=6cm]{./images/demod_fft1.PNG}}
+   \end{tabular}
+   \end{flushleft}
+   \pagebreak
+   \subsection{Code to study the varation of carrier wave frequency in accordance with message signal in FM}
+   \begin{flushleft}We can see that the carrier wave frequency rises and it compresses as the peak of message signal is reached while it goes down and expansion happens in case of trough.This phenomenon results in accordance with the following standard equation of frequency modulation :
+   	\begin{center}
+   		\[f_{i}(t)=f_{c} + k_{f}*m(t) \]
+   	\end{center}
+     $f_i(t)$ is the instantaneous frequency of carrier wave signal and varies linearly with the message signal \\\ $k_f$ is the frequency-sensitivity factor(in hertz per volt) and $f_c$ is the frequency of the unmodulated carrier signal.
+   	\lstset{numbers=none,breaklines=true,} 
+   	\begin{lstlisting}[language=python]
+   	#Frequency Modulation Code
+   	import matplotlib.pyplot as plt
+   	import numpy as np
+   	from math import pi
+   	
+   	plt.close ('all')
+   	
+   	#Sampling Frequency
+   	Fs = 2000
+   	t = np.arange(0,0.2,1/Fs)
+   	
+   	#Signal frequency
+   	fc = 100
+   	fm = 20 # hertz
+   	
+   	#modulation index
+   	b=3
+   	
+   	m = np.cos(2*pi*fm*t)
+   	fm = np.cos(2 * pi * fc*t +b*np.sin(2*pi*fm*t))
+   	plt.subplot(3,1,1)
+   	plt.title('Message signal')
+   	plt.xlabel('Time(s)')
+   	plt.ylabel('Amplitude')
+   	plt.plot(t,m)
+   	plt.subplot(3,1,2)
+   	plt.title('Carrier signal')
+   	plt.xlabel('Time(s)')
+   	plt.ylabel('Amplitude')
+   	plt.plot(t,fm)
+   	plt.subplot(3,1,3)
+   	plt.plot(t,fm)
+   	plt.title('Modulated signal and Message signal')
+   	plt.xlabel('Time(s)')
+   	plt.ylabel('Amplitude')
+   	plt.plot(t,m)
+   	plt.subplots_adjust(hspace=2)
+   	plt.rc('font', size=10)
+   	  \end{lstlisting}
+   	\large\textbf{Output : }
+   	\small When we run the above code snippet in our Jupyter Notebook kernel we get the following plots as our outputs,which clearly describes FM :
+   	\begin{center}
+   		{\includegraphics[width=0.80 \textwidth]{./images/FM.PNG}}\\\bigskip
+   	\end{center}
+   \end{flushleft}
+   \pagebreak
+   \subsection{Code for Frequency Modulation and Demodulation using Envelope Detector }
+   \lstset{numbers=none,breaklines=true,} 
+   \begin{lstlisting}[language=MATLAB]
+   clc
+   clear all
+   %plot for fm
+   fc=20;
+   fm=2;
+   ts=1/(10*fc);
+   fs=1/ts;
+   wc=2*pi*fc;
+   t=0:ts:2;
+   beta = 5;
+   m = sin(2*pi*fm*t);
+   y = cos(2*pi*fc*t + beta*m);
+   figure(1)
+   subplot(211)
+   plot(t,m)
+   title('Input Signal')
+   subplot(212)
+   plot(t,y)
+   title('FM modulation of input signal')
+   %plot the frequency response
+   mf=fftshift(fft(m))*ts;
+   delta=fs/length(mf);
+   f=-fs/2:delta:fs/2 -delta;
+   figure(2)
+   subplot(211)
+   plot(f,abs(mf))
+   title("Magnitude spectrum of input signal")
+   a=fftshift(fft(y))*ts;
+   delta=fs/length(a);
+   f=-fs/2:delta:fs/2 -delta;
+   subplot(212)
+   plot(f,abs(a))
+   title('Magnitude spectrum of the FM')
+   E=diff(y)/ts;
+   figure(3)
+   plot(E)
+   title('The differentiation of fm')
+   
+   %Envelope Detector
+   vout(1)=E(1);
+   t1=(0:length(E)-1)*ts;
+   R=[10^5,10^4,10^3,10^2]*3.2;
+   c=10^-6;
+   for n=1:4
+   for i=2:length(E)
+	   if E(i)>vout(i-1)
+	   	vout(i)=E(i)
+	   else 
+	   	vout(i)=vout(i-1).*exp(-ts/(R(n)*c))
+	   end
+   end
+   figure(4)
+   subplot(4,1,n)
+   plot(t1,vout,t1,E)
+   title('The AM signal and envelope signal')
+   end
+   \end{lstlisting}
+   \large\textbf{Outputs : }
+   \small When we run the above code snippet in Octave/MATLAB we get the following plots as our outputs,which clearly describes FM modulation and demodulation using envelope detector: \\\bigskip
+   \centering
+   \begin{tabular}{ccccc}
+   	\toprule
+   	a & b \\
+   	\midrule
+   	{\includegraphics[width=7cm,height=7cm]{./images/fmenv1.PNG}} & {\includegraphics[width=7cm,height=7cm]{./images/fmenv2.PNG}}  \\
+   	{\includegraphics[width=7cm,height=7cm]{./images/fmenv3.PNG}} & {\includegraphics[width=7cm,height=7cm]{./images/fmenv4.PNG}}  \\
+   \end{tabular}
+    \pagebreak
+    \subsection{Code for Frequency Modulation and Demodulation using VCO}
+    \lstset{numbers=none,breaklines=true,} 
+    \begin{lstlisting}[language=MATLAB]
+    clc
+    clear all
+    close all
+    t = 0:255;
+    t = t/256;
+    f = 2;
+    fc = 20;
+    beta = 5;
+    m = sin(2*pi*f*t);
+    xc = cos(2*pi*fc*t + beta*m);
+    figure(1)
+    subplot(2,1,1)
+    plot (t,m)
+    title('Message Signal');
+    subplot(2,1,2)
+    plot(t,xc)
+    title('FM Signal');
+    figure(2)
+    fo = zeros(1,256);
+    ff = zeros(1,256);
+    ff = fc + 4*cos(2*pi*f*t);
+    x = zeros(1,256);
+    disc = zeros(1,256);
+    fo(1) = 20;
+    
+    for i=1:256
+	    disc(i) = 2*pi*fc*t(i) + beta*m(i) - 2*pi*fo(i)*t(i);
+	    if (i ~= 1)
+	   	 x(i) = (disc(i) - disc(i-1))*256/(2*pi);
+	    else
+	    	x(i) = disc(i)*256/(2*pi);
+	    end;
+	    if (i ~= 256)
+	    	fo(i+1) = fc + 0.001*x(i);
+	    end;
+    end;
+    
+    subplot(2,1,1)
+    plot(t,disc);
+    ylabel('Discriminator');
+    title('Output of Discrminator');
+    subplot(2,1,2)
+    plot(t,x);
+    ylabel('x');
+    title('Adjustment to VCO');
+    \end{lstlisting}
+    \pagebreak
+    \large\textbf{Outputs : }
+    \small When we run the above code snippet in Octave/MATLAB we get the following plots as our outputs,which clearly describes FM modulation and demodulation using VCO: \\\bigskip
+    \centering
+    \begin{tabular}{ccccc}
+    	\toprule
+    	a & b \\
+    	\midrule
+    	{\includegraphics[width=8cm,height=8cm]{./images/vco1.jpeg}} &
+    	{\includegraphics[width=8cm,height=8cm]{./images/vco2.jpeg}} \\
+    \end{tabular}
+    \pagebreak
+    \begin{thebibliography}{9}
+    	
+    	\bibitem{to}
+    	\texttt{https://www.oreilly.com/library/view/elegant-scipy/9781491922927/ch04.html}
+    	
+    	\bibitem{too}
+    	\texttt{
+    		http://web.mit.edu/6.02/www/s2012/handouts/14.pdf}
+    	
+    	\bibitem{tooo}
+    	\texttt{http://wits.ice.nsysu.edu.tw/course/pdfdownload/99CS/Comm-03-Amplitude20Modulation.pdf}
+    	
+    	\bibitem{toopoo}
+    	\texttt{https://www.slideshare.net/search/slideshow?searchfrom=header=Attenuation}
+    	
+    	\bibitem{too0poo}
+    	\texttt{https://www.tutorialspoint.com/principlesofcommunicationvsbmodulation.htm}
+    	
+    	\bibitem{tookpoo}
+    	\texttt{https://www.ni.com/en-in/innovations/white-papers/06/amplitude-modulation.html}
+    	
+    	\bibitem{tooqpoo}
+    	\texttt{https://www.beilstein-journals.org/bjnano/articles/8/142}
+    	
+    	\bibitem{tmpoo}
+    	\texttt{https://en.wikipedia.org/wiki/Attenuationcoefficient}
+    	
+    	\bibitem{toompoo}
+    	\texttt{https://www.cdt21.com/resources/Modulation/modulationFM.asp}
+    	
+    	\bibitem{tompoo}
+    	\texttt{https://blogs.zhinst.com/how-to-demodulate-multi-frequency-signals-such-as-am-fm/}
+    	
+    	\bibitem{toomoo}
+    	\texttt{https://searchnetworking.techtarget.com/definition/attenuation?amp=1}
+    	
+    	\bibitem{toomoo}
+    	\texttt{https://www.aero.iitb.ac.in/satelliteWiki/index.php/Modulation-and-Demodulation}
+    	
+    	\bibitem{toomoo}
+    	\texttt{https://www.electronics-notes.com/articles/radio/modulation/amplitude-modulation-am.php}
+    	
+    	\bibitem{toooo}
+    	Introduction to Analog and Digital Communications,2nd Edition by. Simon Haykin and Michael Moher
+    	
+    	\bibitem{tooooo}
+    	Data Communications and Networking,4th Edition by. Behrouz A Forouzan
+    \end{thebibliography}
 \end{document}
